@@ -16,6 +16,7 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
   const calendarRef = useRef(null)
   const isSale = type === 'sale'
   const isMobile = window.innerWidth <= 768
+  const [mobileBookingOpen, setMobileBookingOpen] = useState(false)
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -191,7 +192,13 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
                       )}
                     </div>
                     <button className="btn" style={{ padding: '14px 24px', whiteSpace: 'nowrap' }}
-                      onClick={() => isSale ? onRdv(property.title) : setBookingStep('form')}>
+                      onClick={() => {
+                        if (isSale) {
+                          onRdv(property.title)
+                        } else {
+                          setMobileBookingOpen(true)  // ← ouvre la modale
+                        }
+                      }}>
                       {isSale ? 'Prendre RDV' : 'Réserver'}
                     </button>
                   </>
@@ -332,6 +339,121 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
           </div>
         </div>
       </div>
+
+      {isMobile && mobileBookingOpen && (
+        <div style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
+          zIndex: 3000, display: 'flex', alignItems: 'flex-end',
+        }}
+          onClick={e => e.target === e.currentTarget && setMobileBookingOpen(false)}>
+          <div style={{
+            background: 'white', width: '100%',
+            borderRadius: '20px 20px 0 0',
+            padding: '24px 20px 40px',
+            maxHeight: '90vh', overflowY: 'auto',
+          }}>
+            {/* Barre de fermeture */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+              <h3 style={{ fontFamily: 'Playfair Display, serif' }}>Réservation</h3>
+              <button onClick={() => setMobileBookingOpen(false)}
+                style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>×</button>
+            </div>
+
+            {/* Résumé prix */}
+            <div style={{ background: 'var(--gray)', borderRadius: 8, padding: '12px 16px', marginBottom: 20, display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ color: 'var(--text-muted)' }}>Prix par nuit</span>
+              <span style={{ fontWeight: 700, color: 'var(--primary)' }}>{property.price.toLocaleString('fr-FR')} €</span>
+            </div>
+
+            {/* Calendrier */}
+            {bookingStep === 'idle' && (
+              <>
+                <DayPicker
+                  mode="range"
+                  selected={dateRange}
+                  onSelect={setDateRange}
+                  locale={fr}
+                  disabled={{ before: new Date() }}
+                  numberOfMonths={1}
+                  style={{ margin: '0 auto' }}
+                />
+                {nights > 0 && (
+                  <div style={{ background: 'var(--gray)', borderRadius: 8, padding: 15, margin: '12px 0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                      <span style={{ color: 'var(--text-muted)' }}>Durée :</span>
+                      <span style={{ fontWeight: 600 }}>{nights} nuit{nights > 1 ? 's' : ''}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700, color: 'var(--primary)', fontSize: '1.1rem' }}>
+                      <span>Total :</span>
+                      <span>{total.toLocaleString('fr-FR')} €</span>
+                    </div>
+                  </div>
+                )}
+                <button className="btn" style={{ width: '100%', padding: 16, marginTop: 8 }}
+                  disabled={!dateRange?.from || !dateRange?.to}
+                  onClick={() => setBookingStep('form')}>
+                  Continuer
+                </button>
+              </>
+            )}
+
+            {/* Formulaire client */}
+            {bookingStep === 'form' && (
+              <form onSubmit={handleBooking} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div style={{ fontSize: '0.85rem', background: 'var(--gray)', padding: 12, borderRadius: 6, marginBottom: 4 }}>
+                  {format(dateRange.from, 'dd/MM/yyyy')} → {format(dateRange.to, 'dd/MM/yyyy')} · {nights} nuits · <strong>{total.toLocaleString('fr-FR')} €</strong>
+                </div>
+                <input className="form-input" placeholder="Prénom *" required value={clientForm.firstname}
+                  onChange={e => setClientForm({ ...clientForm, firstname: e.target.value })} />
+                <input className="form-input" placeholder="Nom *" required value={clientForm.name}
+                  onChange={e => setClientForm({ ...clientForm, name: e.target.value })} />
+                <input className="form-input" type="email" placeholder="Email *" required value={clientForm.email}
+                  onChange={e => setClientForm({ ...clientForm, email: e.target.value })} />
+                <input className="form-input" type="tel" placeholder="Téléphone *" required value={clientForm.phone}
+                  onChange={e => setClientForm({ ...clientForm, phone: e.target.value })} />
+                <button className="btn" type="submit" disabled={loading} style={{ padding: 16 }}>
+                  {loading ? 'Envoi...' : 'Continuer vers le paiement'}
+                </button>
+                <button type="button" onClick={() => setBookingStep('idle')}
+                  style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
+                  ← Retour
+                </button>
+              </form>
+            )}
+
+            {/* Paiement */}
+            {bookingStep === 'payment' && (
+              <form onSubmit={handlePayment} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div style={{ fontSize: '0.85rem', background: 'var(--gray)', padding: 12, borderRadius: 6, marginBottom: 4 }}>
+                  Total : <strong style={{ color: 'var(--primary)' }}>{total.toLocaleString('fr-FR')} €</strong>
+                </div>
+                <input className="form-input" placeholder="Numéro de carte" required />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                  <input className="form-input" placeholder="MM/AA" required />
+                  <input className="form-input" placeholder="CVC" required maxLength={3} />
+                </div>
+                <input className="form-input" placeholder="Nom sur la carte" required />
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-muted)', fontSize: '0.8rem', background: 'var(--gray)', padding: 10, borderRadius: 6 }}>
+                  🔒 Paiement 100% sécurisé SSL
+                </div>
+                <button className="btn" type="submit" style={{ padding: 16 }}>
+                  Payer {total.toLocaleString('fr-FR')} €
+                </button>
+              </form>
+            )}
+
+            {/* Confirmation */}
+            {bookingStep === 'done' && (
+              <div className="alert-success" style={{ padding: 20, textAlign: 'center' }}>
+                <div style={{ fontSize: '2.5rem', marginBottom: 10 }}>✓</div>
+                <h3 style={{ marginBottom: 8 }}>Réservation confirmée !</h3>
+                <p style={{ marginBottom: 15 }}>Un email de confirmation vous sera envoyé.</p>
+                <button className="btn" onClick={() => { setMobileBookingOpen(false); onClose() }}>Fermer</button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Lightbox */}
       {lightbox !== null && (
