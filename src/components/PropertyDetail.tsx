@@ -160,135 +160,174 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
 
           {/* Right: booking/rdv */}
           <div>
-            <div className="booking-box">
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: 6 }}>
-                {isSale ? 'Prix de vente' : 'Prix par nuit'}
-              </p>
-              <h3 style={{ color: 'var(--primary)', fontSize: '2rem', marginBottom: 20, fontFamily: 'Playfair Display, serif' }}>
-                {property.price.toLocaleString('fr-FR')} €{isSale ? '' : '/nuit'}
-              </h3>
-
-              {isSale ? (
-                <button className="btn" style={{ width: '100%', padding: 18, marginBottom: 12 }}
-                  onClick={() => onRdv(property.title)}>
-                  Prendre rendez-vous
-                </button>
-              ) : bookingStep === 'idle' ? (
-                <>
-                  {/* Date picker */}
-                  <div ref={calendarRef} style={{ position: 'relative', marginBottom: 16 }}>
-                    <button onClick={() => setCalendarOpen(!calendarOpen)}
-                      style={{
-                        width: '100%', padding: '12px 16px', border: '1px solid var(--border)',
-                        borderRadius: 4, background: 'white', textAlign: 'left', cursor: 'pointer',
-                        fontSize: '0.9rem', fontFamily: 'Montserrat, sans-serif',
-                        display: 'flex', alignItems: 'center', gap: 8,
-                      }}>
-                      📅 {dateRange?.from && dateRange?.to
-                        ? `${format(dateRange.from, 'dd MMM', { locale: fr })} → ${format(dateRange.to, 'dd MMM yyyy', { locale: fr })}`
-                        : dateRange?.from
-                          ? format(dateRange.from, 'dd MMM yyyy', { locale: fr })
-                          : 'Choisir les dates'}
+            <div style={{
+              ...(isMobile ? {
+                position: 'fixed',
+                bottom: 0, left: 0, right: 0,
+                background: 'white',
+                borderTop: '1px solid var(--border)',
+                padding: '16px 20px',
+                zIndex: 100,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 16,
+              } : {
+                position: 'sticky',
+                top: 100,
+              })
+            }}>
+              {isMobile ? (
+                  // Version mobile condensée
+                  <>
+                    <div>
+                      <p style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--primary)' }}>
+                        {property.price.toLocaleString('fr-FR')} €{isSale ? '' : '/nuit'}
+                      </p>
+                      {nights > 0 && (
+                        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                          Total : {total.toLocaleString('fr-FR')} €
+                        </p>
+                      )}
+                    </div>
+                    <button className="btn" style={{ padding: '14px 24px', whiteSpace: 'nowrap' }}
+                      onClick={() => isSale ? onRdv(property.title) : setBookingStep('form')}>
+                      {isSale ? 'Prendre RDV' : 'Réserver'}
                     </button>
-                    {calendarOpen && (
-                      <div style={{
-                        position: 'absolute', top: '100%', left: 0, zIndex: 50,
-                        background: 'white', borderRadius: 8, boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
-                        border: '1px solid var(--border)', marginTop: 4,
-                      }}>
-                        <DayPicker
-                          mode="range"
-                          selected={dateRange}
-                          onSelect={(range) => {
-                            setDateRange(range)
-                            if (range?.from && range?.to) setCalendarOpen(false)
-                          }}
-                          locale={fr}
-                          disabled={{ before: new Date() }}
-                          numberOfMonths={1}
-                        />
-                      </div>
-                    )}
-                  </div>
+                  </>
+                ) : (
+                  <> 
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: 6 }}>
+                    {isSale ? 'Prix de vente' : 'Prix par nuit'}
+                  </p>
+                  <h3 style={{ color: 'var(--primary)', fontSize: '2rem', marginBottom: 20, fontFamily: 'Playfair Display, serif' }}>
+                    {property.price.toLocaleString('fr-FR')} €{isSale ? '' : '/nuit'}
+                  </h3>
 
-                  {nights > 0 && (
-                    <div style={{ background: 'var(--gray)', borderRadius: 8, padding: 15, marginBottom: 16 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                        <span style={{ color: 'var(--text-muted)' }}>Durée :</span>
-                        <span style={{ fontWeight: 600 }}>{nights} nuit{nights > 1 ? 's' : ''}</span>
+                  {isSale ? (
+                    <button className="btn" style={{ width: '100%', padding: 18, marginBottom: 12 }}
+                      onClick={() => onRdv(property.title)}>
+                      Prendre rendez-vous
+                    </button>
+                  ) : bookingStep === 'idle' ? (
+                    <>
+                      {/* Date picker */}
+                      <div ref={calendarRef} style={{ position: 'relative', marginBottom: 16 }}>
+                        <button onClick={() => setCalendarOpen(!calendarOpen)}
+                          style={{
+                            width: '100%', padding: '12px 16px', border: '1px solid var(--border)',
+                            borderRadius: 4, background: 'white', textAlign: 'left', cursor: 'pointer',
+                            fontSize: '0.9rem', fontFamily: 'Montserrat, sans-serif',
+                            display: 'flex', alignItems: 'center', gap: 8,
+                          }}>
+                          📅 {dateRange?.from && dateRange?.to
+                            ? `${format(dateRange.from, 'dd MMM', { locale: fr })} → ${format(dateRange.to, 'dd MMM yyyy', { locale: fr })}`
+                            : dateRange?.from
+                              ? format(dateRange.from, 'dd MMM yyyy', { locale: fr })
+                              : 'Choisir les dates'}
+                        </button>
+                        {calendarOpen && (
+                          <div style={{
+                            position: 'absolute', top: '100%', left: 0, zIndex: 50,
+                            background: 'white', borderRadius: 8, boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
+                            border: '1px solid var(--border)', marginTop: 4,
+                          }}>
+                            <DayPicker
+                              mode="range"
+                              selected={dateRange}
+                              onSelect={(range) => {
+                                setDateRange(range)
+                                if (range?.from && range?.to) setCalendarOpen(false)
+                              }}
+                              locale={fr}
+                              disabled={{ before: new Date() }}
+                              numberOfMonths={1}
+                            />
+                          </div>
+                        )}
                       </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary)' }}>
-                        <span>Total :</span>
-                        <span>{total.toLocaleString('fr-FR')} €</span>
+
+                      {nights > 0 && (
+                        <div style={{ background: 'var(--gray)', borderRadius: 8, padding: 15, marginBottom: 16 }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                            <span style={{ color: 'var(--text-muted)' }}>Durée :</span>
+                            <span style={{ fontWeight: 600 }}>{nights} nuit{nights > 1 ? 's' : ''}</span>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary)' }}>
+                            <span>Total :</span>
+                            <span>{total.toLocaleString('fr-FR')} €</span>
+                          </div>
+                        </div>
+                      )}
+
+                      <button className="btn" style={{ width: '100%', padding: 18, marginBottom: 12 }}
+                        disabled={!dateRange?.from || !dateRange?.to}
+                        onClick={() => setBookingStep('form')}>
+                        Réserver
+                      </button>
+                    </>
+                  ) : bookingStep === 'form' ? (
+                    <form onSubmit={handleBooking} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                      <h4 style={{ marginBottom: 4 }}>Vos informations</h4>
+                      <div style={{ background: 'var(--gray)', borderRadius: 6, padding: 12, marginBottom: 4, fontSize: '0.85rem' }}>
+                        {format(dateRange.from, 'dd/MM/yyyy')} → {format(dateRange.to, 'dd/MM/yyyy')} · {nights} nuits · <strong>{total.toLocaleString('fr-FR')} €</strong>
                       </div>
+                      <div className="form-row">
+                        <input className="form-input" placeholder="Prénom *" required value={clientForm.firstname}
+                          onChange={e => setClientForm({ ...clientForm, firstname: e.target.value })} />
+                        <input className="form-input" placeholder="Nom *" required value={clientForm.name}
+                          onChange={e => setClientForm({ ...clientForm, name: e.target.value })} />
+                      </div>
+                      <input className="form-input" type="email" placeholder="Email *" required value={clientForm.email}
+                        onChange={e => setClientForm({ ...clientForm, email: e.target.value })} />
+                      <input className="form-input" type="tel" placeholder="Téléphone *" required value={clientForm.phone}
+                        onChange={e => setClientForm({ ...clientForm, phone: e.target.value })} />
+                      <button className="btn" type="submit" disabled={loading} style={{ padding: 14 }}>
+                        {loading ? 'Envoi...' : 'Continuer vers le paiement'}
+                      </button>
+                      <button type="button" onClick={() => setBookingStep('idle')}
+                        style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '0.85rem' }}>
+                        ← Retour
+                      </button>
+                    </form>
+                  ) : bookingStep === 'payment' ? (
+                    <form onSubmit={handlePayment} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                      <h4 style={{ marginBottom: 4 }}>Paiement sécurisé</h4>
+                      <div style={{ background: 'var(--gray)', borderRadius: 6, padding: 12, marginBottom: 4, fontSize: '0.85rem' }}>
+                        Total : <strong style={{ color: 'var(--primary)' }}>{total.toLocaleString('fr-FR')} €</strong>
+                      </div>
+                      <input className="form-input" placeholder="Numéro de carte" required />
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                        <input className="form-input" placeholder="MM/AA" required />
+                        <input className="form-input" placeholder="CVC" required maxLength={3} />
+                      </div>
+                      <input className="form-input" placeholder="Nom sur la carte" required />
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-muted)', fontSize: '0.8rem', background: 'var(--gray)', padding: 10, borderRadius: 6 }}>
+                        🔒 Paiement 100% sécurisé SSL
+                      </div>
+                      <button className="btn" type="submit" style={{ padding: 14 }}>
+                        Payer {total.toLocaleString('fr-FR')} €
+                      </button>
+                    </form>
+                  ) : (
+                    <div className="alert-success" style={{ padding: 20, textAlign: 'center' }}>
+                      <div style={{ fontSize: '2rem', marginBottom: 10 }}>✓</div>
+                      <h3 style={{ marginBottom: 8 }}>Réservation confirmée !</h3>
+                      <p style={{ fontSize: '0.9rem', marginBottom: 15 }}>Un email de confirmation vous sera envoyé.</p>
+                      <button className="btn" onClick={onClose}>Fermer</button>
                     </div>
                   )}
 
-                  <button className="btn" style={{ width: '100%', padding: 18, marginBottom: 12 }}
-                    disabled={!dateRange?.from || !dateRange?.to}
-                    onClick={() => setBookingStep('form')}>
-                    Réserver
+                  <button style={{ width: '100%', padding: '12px', marginTop: 10, background: 'transparent', border: '1px solid var(--border)', borderRadius: 4, cursor: 'pointer', fontSize: '0.9rem', fontFamily: 'Montserrat, sans-serif' }}
+                    onClick={() => onRdv(property.title)}>
+                    Contacter un conseiller
                   </button>
-                </>
-              ) : bookingStep === 'form' ? (
-                <form onSubmit={handleBooking} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <h4 style={{ marginBottom: 4 }}>Vos informations</h4>
-                  <div style={{ background: 'var(--gray)', borderRadius: 6, padding: 12, marginBottom: 4, fontSize: '0.85rem' }}>
-                    {format(dateRange.from, 'dd/MM/yyyy')} → {format(dateRange.to, 'dd/MM/yyyy')} · {nights} nuits · <strong>{total.toLocaleString('fr-FR')} €</strong>
-                  </div>
-                  <div className="form-row">
-                    <input className="form-input" placeholder="Prénom *" required value={clientForm.firstname}
-                      onChange={e => setClientForm({ ...clientForm, firstname: e.target.value })} />
-                    <input className="form-input" placeholder="Nom *" required value={clientForm.name}
-                      onChange={e => setClientForm({ ...clientForm, name: e.target.value })} />
-                  </div>
-                  <input className="form-input" type="email" placeholder="Email *" required value={clientForm.email}
-                    onChange={e => setClientForm({ ...clientForm, email: e.target.value })} />
-                  <input className="form-input" type="tel" placeholder="Téléphone *" required value={clientForm.phone}
-                    onChange={e => setClientForm({ ...clientForm, phone: e.target.value })} />
-                  <button className="btn" type="submit" disabled={loading} style={{ padding: 14 }}>
-                    {loading ? 'Envoi...' : 'Continuer vers le paiement'}
-                  </button>
-                  <button type="button" onClick={() => setBookingStep('idle')}
-                    style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '0.85rem' }}>
-                    ← Retour
-                  </button>
-                </form>
-              ) : bookingStep === 'payment' ? (
-                <form onSubmit={handlePayment} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <h4 style={{ marginBottom: 4 }}>Paiement sécurisé</h4>
-                  <div style={{ background: 'var(--gray)', borderRadius: 6, padding: 12, marginBottom: 4, fontSize: '0.85rem' }}>
-                    Total : <strong style={{ color: 'var(--primary)' }}>{total.toLocaleString('fr-FR')} €</strong>
-                  </div>
-                  <input className="form-input" placeholder="Numéro de carte" required />
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-                    <input className="form-input" placeholder="MM/AA" required />
-                    <input className="form-input" placeholder="CVC" required maxLength={3} />
-                  </div>
-                  <input className="form-input" placeholder="Nom sur la carte" required />
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-muted)', fontSize: '0.8rem', background: 'var(--gray)', padding: 10, borderRadius: 6 }}>
-                    🔒 Paiement 100% sécurisé SSL
-                  </div>
-                  <button className="btn" type="submit" style={{ padding: 14 }}>
-                    Payer {total.toLocaleString('fr-FR')} €
-                  </button>
-                </form>
-              ) : (
-                <div className="alert-success" style={{ padding: 20, textAlign: 'center' }}>
-                  <div style={{ fontSize: '2rem', marginBottom: 10 }}>✓</div>
-                  <h3 style={{ marginBottom: 8 }}>Réservation confirmée !</h3>
-                  <p style={{ fontSize: '0.9rem', marginBottom: 15 }}>Un email de confirmation vous sera envoyé.</p>
-                  <button className="btn" onClick={onClose}>Fermer</button>
-                </div>
-              )}
-
-              <button style={{ width: '100%', padding: '12px', marginTop: 10, background: 'transparent', border: '1px solid var(--border)', borderRadius: 4, cursor: 'pointer', fontSize: '0.9rem', fontFamily: 'Montserrat, sans-serif' }}
-                onClick={() => onRdv(property.title)}>
-                Contacter un conseiller
-              </button>
-              <p style={{ fontSize: '0.75rem', textAlign: 'center', marginTop: 10, color: 'var(--text-muted)' }}>
-                Conseiller disponible 7j/7
-              </p>
+                  <p style={{ fontSize: '0.75rem', textAlign: 'center', marginTop: 10, color: 'var(--text-muted)' }}>
+                    Conseiller disponible 7j/7
+                  </p>
+                  </>
+                )}
+              
             </div>
           </div>
         </div>
