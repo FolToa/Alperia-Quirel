@@ -15,6 +15,7 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
   const [loading, setLoading] = useState(false)
   const calendarRef = useRef(null)
   const isSale = type === 'sale'
+  const isMobile = window.innerWidth <= 768
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -74,19 +75,49 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
       </button>
 
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 5%' }}>
-        <div className="detail-grid">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr',
+          gap: isMobile ? 20 : 40,
+        }}>
           {/* Left: images + info */}
           <div>
             {/* Gallery */}
-            <div className="gallery" style={{ marginBottom: 20 }}>
-              <div className="gallery-item"
-                style={{ backgroundImage: `url(${property.images[selectedImg]})` }}
-                onClick={() => setLightbox(selectedImg)} />
-              <div className="gallery-sub">
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '2fr 1fr',
+              gridTemplateRows: '1fr',
+              gap: 8,
+              height: 420,
+              marginBottom: 20,
+              borderRadius: 12,
+              overflow: 'hidden',
+            }}>
+              {/* Photo principale */}
+              <div
+                onClick={() => setLightbox(0)}
+                style={{
+                  backgroundImage: `url(${property.images[0]})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  cursor: 'pointer',
+                }}
+              />
+              {/* 2 petites à droite */}
+              <div style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: 8 }}>
                 {property.images.slice(1, 3).map((img, i) => (
-                  <div key={i} className="gallery-item"
-                    style={{ backgroundImage: `url(${img})` }}
-                    onClick={() => setLightbox(i + 1)} />
+                  <div key={i}
+                    onClick={() => setLightbox(i + 1)}
+                    style={{
+                      backgroundImage: `url(${img})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      cursor: 'pointer',
+                      transition: 'opacity 0.2s',
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+                    onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+                  />
                 ))}
               </div>
             </div>
