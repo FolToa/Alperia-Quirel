@@ -34,9 +34,12 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
   }, [])
 
   const nights = dateRange?.from && dateRange?.to
-    ? differenceInDays(dateRange.to, dateRange.from)
-    : 0
-  const total = nights * property.price
+  ? differenceInDays(dateRange.to, dateRange.from) : 0
+
+  const isOffSeason = dateRange?.from && dateRange.to > new Date('2026-04-01')
+  const discountedPrice = Math.round(property.price * 0.7)
+  const displayPrice = isOffSeason ? discountedPrice : property.price
+  const total = nights * displayPrice  // ← utilise displayPrice
 
   const handleBooking = async (e) => {
     e.preventDefault()
@@ -182,14 +185,28 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
                   // Version mobile condensée
                   <>
                     <div>
-                      <p style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--primary)' }}>
-                        {property.price.toLocaleString('fr-FR')} €{isSale ? '' : '/nuit'}
-                      </p>
-                      {nights > 0 && (
-                        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                          Total : {total.toLocaleString('fr-FR')} €
-                        </p>
-                      )}
+                      <div>
+                        {isOffSeason ? (
+                          <>
+                            <span style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                              {property.price.toLocaleString('fr-FR')} €/nuit
+                            </span>
+                            <p style={{ fontWeight: 700, fontSize: '1.1rem', color: '#e53e3e', margin: 0 }}>
+                              {discountedPrice.toLocaleString('fr-FR')} €/nuit
+                            </p>
+                            <p style={{ fontSize: '0.7rem', color: '#e53e3e', margin: 0 }}>Prix hors saison</p>
+                          </>
+                        ) : (
+                          <p style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--primary)', margin: 0 }}>
+                            {property.price.toLocaleString('fr-FR')} €/nuit
+                          </p>
+                        )}
+                        {nights > 0 && (
+                          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>
+                            Total : {total.toLocaleString('fr-FR')} €
+                          </p>
+                        )}
+                      </div>
                     </div>
                     <button className="btn" style={{ padding: '14px 24px', whiteSpace: 'nowrap' }}
                       onClick={() => {
@@ -207,9 +224,24 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
                   <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: 6 }}>
                     {isSale ? 'Prix de vente' : 'Prix par nuit'}
                   </p>
-                  <h3 style={{ color: 'var(--primary)', fontSize: '2rem', marginBottom: 20, fontFamily: 'Playfair Display, serif' }}>
-                    {property.price.toLocaleString('fr-FR')} €{isSale ? '' : '/nuit'}
-                  </h3>
+
+                  {isOffSeason ? (
+                    <>
+                      <span style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '1.2rem' }}>
+                        {property.price.toLocaleString('fr-FR')} €
+                      </span>
+                      <h3 style={{ color: '#e53e3e', fontSize: '2rem', margin: '4px 0 4px', fontFamily: 'Playfair Display, serif' }}>
+                        {discountedPrice.toLocaleString('fr-FR')} €/nuit
+                      </h3>
+                      <p style={{ fontSize: '0.78rem', color: '#e53e3e', marginBottom: 20, fontWeight: 600 }}>
+                        Prix hors saison — 30% de réduction
+                      </p>
+                    </>
+                  ) : (
+                    <h3 style={{ color: 'var(--primary)', fontSize: '2rem', marginBottom: 20, fontFamily: 'Playfair Display, serif' }}>
+                      {property.price.toLocaleString('fr-FR')} €/nuit
+                    </h3>
+                  )}
 
                   {isSale ? (
                     <button className="btn" style={{ width: '100%', padding: 18, marginBottom: 12 }}
@@ -260,10 +292,19 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
                             <span style={{ color: 'var(--text-muted)' }}>Durée :</span>
                             <span style={{ fontWeight: 600 }}>{nights} nuit{nights > 1 ? 's' : ''}</span>
                           </div>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary)' }}>
+                          {isOffSeason && (
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                              <span>Prix normal :</span>
+                              <span style={{ textDecoration: 'line-through' }}>{(nights * property.price).toLocaleString('fr-FR')} €</span>
+                            </div>
+                          )}
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.1rem', fontWeight: 700, color: isOffSeason ? '#e53e3e' : 'var(--primary)' }}>
                             <span>Total :</span>
                             <span>{total.toLocaleString('fr-FR')} €</span>
                           </div>
+                          {isOffSeason && (
+                            <p style={{ fontSize: '0.75rem', color: '#e53e3e', textAlign: 'right', marginTop: 4 }}>Prix hors saison</p>
+                          )}
                         </div>
                       )}
 
@@ -361,8 +402,21 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
 
             {/* Résumé prix */}
             <div style={{ background: 'var(--gray)', borderRadius: 8, padding: '12px 16px', marginBottom: 20, display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ color: 'var(--text-muted)' }}>Prix par nuit</span>
-              <span style={{ fontWeight: 700, color: 'var(--primary)' }}>{property.price.toLocaleString('fr-FR')} €</span>
+              <span style={{ color: 'var(--text-muted)', alignContent: 'center' }}>Prix par nuit</span>
+              {
+                isOffSeason ? 
+                  (<div>
+                    <span style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                      {property.price.toLocaleString('fr-FR')} €/nuit
+                    </span>
+                    <p style={{ fontWeight: 700, fontSize: '1.1rem', color: '#e53e3e', margin: 0 }}>
+                      {discountedPrice.toLocaleString('fr-FR')} €/nuit
+                    </p>
+                    <p style={{ fontSize: '0.7rem', color: '#e53e3e', margin: 0 }}>Prix hors saison</p>
+                  </div>) : (
+                    <span style={{ fontWeight: 700, color: 'var(--primary)' }}>{property.price.toLocaleString('fr-FR')} €</span>
+                  )
+              }
             </div>
 
             {/* Calendrier */}
