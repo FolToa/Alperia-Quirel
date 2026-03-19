@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 const team = [
-  { name: 'Marie Dupont', role: 'Directrice & Fondatrice', bio: "15 ans d'expertise en immobilier de montagne. Spécialiste Chalets de Prestige.", img: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/58be0ebf-f5d8-4165-98dc-bb1bcc621429.png' },
-  { name: 'Pierre Martin', role: 'Directeur Commercial', bio: "Expert en investissements alpins. Maîtrise parfaite du marché local.", img: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/8089ad74-7741-4196-98b1-55d50bd2f026.png' },
-  { name: 'Sophie Bernard', role: 'Conseillère Patrimoniale', bio: "Spécialiste location saisonnière et gestion locative haut de gamme.", img: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/ab05ed23-78d8-47ec-a656-c5cec102c511.png' },
+  { name: 'Alexia Roux', role: 'Directrice & Fondatrice', bio: "15 ans d'expertise en immobilier de montagne. Spécialiste Chalets de Prestige.", img: 'alexia.png' },
+  { name: 'Esteban Piovano', role: 'Directeur Commercial', bio: "Expert en investissements alpins. Maîtrise parfaite du marché local.", img: 'esteban.png' },
+  { name: 'Karine Hilali', role: 'Conseillère Patrimoniale', bio: "Spécialiste location saisonnière et gestion locative haut de gamme.", img: 'karine.jpg' },
 ]
 
 const jobs = [
