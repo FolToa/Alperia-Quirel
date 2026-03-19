@@ -265,7 +265,7 @@ textarea.form-input { resize: vertical; min-height: 100px; }
   display: flex; justify-content: center; align-items: center;
   animation: fadeIn 0.2s ease;
 }
-.lightbox img { max-width: 90%; max-height: 90vh; border-radius: 4px; }
+.lightbox img { max-width: 90%; max-height: 80vh; border-radius: 4px; object-fit: contain; padding-top: 100px;}
 .lightbox-close {
   position: fixed; top: 20px; right: 30px;
   color: white; font-size: 2rem; background: none; border: none; cursor: pointer;

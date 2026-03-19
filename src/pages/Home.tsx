@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { stations } from '../data/properties'
 
 function StationCard({ station, navigate }) {
+  const LUXE_STATIONS = new Set(['les-arcs', '3-vallees', 'tignes'])
   const [hovered, setHovered] = useState(false)
   return (
     <div style={{ height: 300, position: 'relative', overflow: 'hidden', cursor: 'pointer' }}
@@ -25,7 +26,10 @@ function StationCard({ station, navigate }) {
         opacity: hovered ? 1 : 0, transform: hovered ? 'translateY(0)' : 'translateY(20px)',
         transition: 'all 0.3s', zIndex: 2,
       }}>
-        <button className="btn-outline" onClick={() => navigate(`/location?station=${station.id}`)}>Louer</button>
+        <button className="btn-outline" 
+          onClick={() => navigate(`${LUXE_STATIONS.has(station.id) ? '/luxe' : '/location'}?station=${station.id}`)}>
+          Louer
+        </button>
         <button className="btn-outline" onClick={() => navigate(`/achat?station=${station.id}`)}>Acheter</button>
       </div>
     </div>

@@ -33,6 +33,22 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      console.log("Key pressed:", e.code);
+
+      if (lightbox !== null && e.code === "ArrowRight") {
+        console.log("On enlève la photo courante");
+        setLightbox((lightbox + 1) % property.images.length)
+      } else if(lightbox !== null && e.code === "ArrowLeft"){
+        setLightbox((lightbox - 1 + property.images.length) % property.images.length)
+      }
+    };
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  })
+
   const nights = dateRange?.from && dateRange?.to
     ? differenceInDays(dateRange.to, dateRange.from) : 0
 
@@ -155,11 +171,13 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
             {property.images.length > 1 && (
               <div style={{ display: 'flex', gap: 8, marginBottom: 30, flexWrap: 'wrap' }}>
                 {property.images.map((img, i) => (
-                  <img key={i} src={img} alt="" onClick={() => setSelectedImg(i)}
-                    style={{
-                      width: 70, height: 50, objectFit: 'cover', borderRadius: 4, cursor: 'pointer',
-                      border: selectedImg === i ? '2px solid var(--primary)' : '2px solid transparent',
-                    }} />
+                  <>
+                    <img key={i} src={img} alt="" onClick={() => setSelectedImg(i)}
+                      style={{
+                        width: 70, height: 50, objectFit: 'cover', borderRadius: 4, cursor: 'pointer',
+                        border: selectedImg === i ? '2px solid var(--primary)' : '2px solid transparent',
+                      }} />
+                  </>
                 ))}
               </div>
             )}
@@ -601,6 +619,13 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
           <button className="lightbox-nav lightbox-prev"
             onClick={e => { e.stopPropagation(); setLightbox((lightbox - 1 + property.images.length) % property.images.length) }}>❮</button>
           <img src={property.images[lightbox]} alt="" onClick={e => e.stopPropagation()} />
+          <span style={{
+            position: 'absolute', bottom: 20,
+            color: 'white', fontSize: '0.9rem', fontWeight: 500,
+            background: 'rgba(0,0,0,0.4)', padding: '4px 12px', borderRadius: 20,
+          }}>
+            {lightbox + 1} / {property.images.length}
+          </span>
           <button className="lightbox-nav lightbox-next"
             onClick={e => { e.stopPropagation(); setLightbox((lightbox + 1) % property.images.length) }}>❯</button>
         </div>

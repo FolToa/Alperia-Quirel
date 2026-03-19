@@ -329,7 +329,7 @@ export const luxeProperties = [
   },
   {
     id: 'luxe-4',
-    title: 'Palais Neige Méribel',
+    title: 'Grand chalet à Méribel',
     station: '3-vallees',
     stationLabel: 'Les 3 Vallées',
     price: 3500,
@@ -339,11 +339,11 @@ export const luxeProperties = [
     image: IMGS_3V.pn1,
     images: [IMGS_3V.pn1, IMGS_3V.pn2, IMGS_3V.pn3],
     location: 'Le Raffort, 73550 Méribel les Allues',
-    description: "Propriété d'exception de 1237 m² pour 14 personnes. 7 chambres suites avec dressing, salon de 200 m², cinéma privé, cave à vins. Piscine intérieure chauffée, spa complet, staff dédié.",
+    description: "Propriété d'exception de 277 m² pour 14 personnes. 7 chambres suites avec dressing, salon de 120 m², cave à vins. Piscine intérieure chauffée, spa complet, staff dédié.",
   },
   {
     id: 'luxe-5',
-    title: 'Chalet Royal Courchevel',
+    title: 'Chalet de luxe à Courchevel',
     station: '3-vallees',
     stationLabel: 'Les 3 Vallées',
     price: 2300,
@@ -353,7 +353,7 @@ export const luxeProperties = [
     image: IMGS_3V.c1,
     images: [IMGS_3V.c1, IMGS_3V.c2, IMGS_3V.c3],
     location: 'Courchevel 1850, 73120 Courchevel',
-    description: "Chalet prestigieux de 837 m² pour 10 personnes. 5 chambres de maître, double salon avec cheminée monumentale, cuisine gastronomique. Spa privatif avec hammam, piscine extérieure chauffée, service de majordome.",
+    description: "Chalet prestigieux de 237 m² pour 10 personnes. 5 chambres de maître, double salon avec cheminée. Spa privatif avec hammam, piscine intérieure-extérieure chauffée, service de majordome.",
   },
   {
     id: 'luxe-6',
