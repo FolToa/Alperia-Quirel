@@ -34,12 +34,37 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
   }, [])
 
   const nights = dateRange?.from && dateRange?.to
-  ? differenceInDays(dateRange.to, dateRange.from) : 0
+    ? differenceInDays(dateRange.to, dateRange.from) : 0
 
-  const isOffSeason = dateRange?.from && dateRange.to > new Date('2026-04-01')
+  const OFF_SEASON_START = new Date('2026-04-01')
+
+  const calcTotal = () => {
+    if (!dateRange?.from || !dateRange?.to) return 0
+
+    const from = dateRange.from
+    const to = dateRange.to
+
+    // Toute la période est en saison normale
+    if (to <= OFF_SEASON_START) {
+      return nights * property.price
+    }
+
+    // Toute la période est hors saison
+    if (from >= OFF_SEASON_START) {
+      return nights * Math.round(property.price * 0.7)
+    }
+
+    // Période mixte : cheval sur le 1er avril
+    const nightsNormal = differenceInDays(OFF_SEASON_START, from)  // du début jusqu'au 1er avril
+    const nightsOff    = differenceInDays(to, OFF_SEASON_START)    // du 1er avril jusqu'à la fin
+
+    return (nightsNormal * property.price) + (nightsOff * Math.round(property.price * 0.7))
+  }
+
+  const isOffSeason = dateRange?.from && dateRange.from >= OFF_SEASON_START
+  const isMixed     = dateRange?.from && dateRange?.to && dateRange.from < OFF_SEASON_START && dateRange.to > OFF_SEASON_START
   const discountedPrice = Math.round(property.price * 0.7)
-  const displayPrice = isOffSeason ? discountedPrice : property.price
-  const total = nights * displayPrice  // ← utilise displayPrice
+  const total = calcTotal()
 
   const handleBooking = async (e) => {
     e.preventDefault()
@@ -196,11 +221,16 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
                             </p>
                             <p style={{ fontSize: '0.7rem', color: '#e53e3e', margin: 0 }}>Prix hors saison</p>
                           </>
-                        ) : (
-                          <p style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--primary)', margin: 0 }}>
-                            {property.price.toLocaleString('fr-FR')} €/nuit
-                          </p>
-                        )}
+                        ) : isSale ? (
+                            <h3 style={{ color: 'var(--primary)', fontSize: '2rem', marginBottom: 20, fontFamily: 'Playfair Display, serif' }}>
+                              {property.price.toLocaleString('fr-FR')} €
+                            </h3>
+                          ) : (
+                            <h3 style={{ color: 'var(--primary)', fontSize: '2rem', marginBottom: 20, fontFamily: 'Playfair Display, serif' }}>
+                              {property.price.toLocaleString('fr-FR')} €/nuit
+                            </h3>
+                          )}
+
                         {nights > 0 && (
                           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>
                             Total : {total.toLocaleString('fr-FR')} €
@@ -237,11 +267,16 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
                         Prix hors saison — 30% de réduction
                       </p>
                     </>
+                  ) : isSale ? (
+                    <h3 style={{ color: 'var(--primary)', fontSize: '2rem', marginBottom: 20, fontFamily: 'Playfair Display, serif' }}>
+                      {property.price.toLocaleString('fr-FR')} €
+                    </h3>
                   ) : (
                     <h3 style={{ color: 'var(--primary)', fontSize: '2rem', marginBottom: 20, fontFamily: 'Playfair Display, serif' }}>
                       {property.price.toLocaleString('fr-FR')} €/nuit
                     </h3>
-                  )}
+                  )
+                }
 
                   {isSale ? (
                     <button className="btn" style={{ width: '100%', padding: 18, marginBottom: 12 }}

@@ -10,6 +10,36 @@ const IMGS = {
   sub2: 'https://db.quirel.com/storage/v1/object/public/images/chat-attachments/feca4381-daad-415f-ac40-670074e0ed03/4dca1f974e61.png',
 }
 
+const IMGS_GB = {
+  aa1: '/grand-bornant/authentique-alpine/aa1.png',
+  aa2: '/grand-bornant/authentique-alpine/aa2.png',
+  aa3: '/grand-bornant/authentique-alpine/aa3.png',
+}
+
+const IMGS_CLS = {
+  cs1: '/la-clusaz/coeur-station/cs1.png',
+  cs2: '/la-clusaz/coeur-station/cs2.png',
+  cs3: '/la-clusaz/coeur-station/cs3.png',
+}
+
+const IMGS_AIL = {
+  c1: '/aillons/charme/c1.png',
+  c2: '/aillons/charme/c2.png',
+  c3: '/aillons/charme/c3.png',
+}
+
+const IMGS_3V = {
+  pm1: '/3-vallees/prestige-meribel/pm1.png',
+  pm2: '/3-vallees/prestige-meribel/pm2.png',
+  pm3: '/3-vallees/prestige-meribel/pm3.png',
+}
+
+const IMGS_ARC = {
+  si1: '/les-arcs/chalet-ski-in/si1.png',
+  si2: '/les-arcs/chalet-ski-in/si2.png',
+  si3: '/les-arcs/chalet-ski-in/si3.png',
+}
+
 export const saleProperties = [
   {
     id: 'sale-1',
@@ -20,8 +50,8 @@ export const saleProperties = [
     surface: 225,
     rooms: 6,
     bedrooms: 3,
-    image: IMGS.chalet1,
-    images: [IMGS.chalet1, IMGS.sub1, IMGS.sub2],
+    image: IMGS_GB.aa1,
+    images: [IMGS_GB.aa1, IMGS_GB.aa2, IMGS_GB.aa3],
     location: 'Route du Chinaillon, 74450 Le Grand-Bornand',
     description: "Ce chalet d'exception offre une vue imprenable sur la chaîne des Aravis. Entièrement rénové avec des matériaux nobles, il allie charme savoyard et confort moderne. Spacieux séjour avec cheminée, cuisine équipée et grande terrasse sud.",
   },
@@ -34,8 +64,8 @@ export const saleProperties = [
     surface: 63,
     rooms: 3,
     bedrooms: 2,
-    image: IMGS.chalet2,
-    images: [IMGS.chalet2, IMGS.sub1, IMGS.sub2],
+    image: IMGS_CLS.cs1,
+    images: [IMGS_CLS.cs1, IMGS_CLS.cs2, IMGS_CLS.cs3],
     location: "Place de l'Église, 74220 La Clusaz",
     description: "Situé au pied des pistes, cet appartement-chalet est un véritable cocon. Idéal pour les amoureux de la glisse, il propose des prestations haut de gamme et une situation géographique rare.",
   },
@@ -48,8 +78,8 @@ export const saleProperties = [
     surface: 254,
     rooms: 7,
     bedrooms: 4,
-    image: IMGS.chalet3,
-    images: [IMGS.chalet3, IMGS.sub1, IMGS.sub2],
+    image: IMGS_AIL.c1,
+    images: [IMGS_AIL.c1, IMGS_AIL.c2, IMGS_AIL.c3],
     location: 'Hameau du Penon, 73340 Aillons-le-Jeune',
     description: "Magnifique demeure offrant de larges volumes. Situé dans un environnement calme et préservé, ce bien dispose d'un vaste jardin et d'un sous-sol complet aménageable.",
   },
@@ -62,8 +92,8 @@ export const saleProperties = [
     surface: 200,
     rooms: 4,
     bedrooms: 3,
-    image: IMGS.chalet4,
-    images: [IMGS.chalet4, IMGS.sub1, IMGS.sub2],
+    image: IMGS_3V.pm1,
+    images: [IMGS_3V.pm1, IMGS_3V.pm2, IMGS_3V.pm3],
     location: 'Le Raffort, 73550 Méribel les Allues',
     description: "Un bien d'exception dans le Domaine des 3 Vallées. Architecture traditionnelle et luxe contemporain se rejoignent ici pour créer un espace de vie unique face aux montagnes.",
   },
@@ -76,8 +106,8 @@ export const saleProperties = [
     surface: 86,
     rooms: 3,
     bedrooms: 2,
-    image: IMGS.chalet5,
-    images: [IMGS.chalet5, IMGS.sub1, IMGS.sub2],
+    image: IMGS_ARC.si1,
+    images: [IMGS_ARC.si1, IMGS_ARC.si2, IMGS_ARC.si3],
     location: 'Arc 1950, 73700 Bourg-Saint-Maurice',
     description: "Appartement situé dans la plus prestigieuse résidence d'Arc 1950. Accès skis aux pieds, services hôteliers et espace bien-être inclus.",
   },
