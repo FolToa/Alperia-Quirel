@@ -1,15 +1,3 @@
-const IMGS = {
-  chalet1: 'https://db.quirel.com/storage/v1/object/public/images/chat-attachments/feca4381-daad-415f-ac40-670074e0ed03/a74bc065ad7d.png',
-  chalet2: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/76ac2eab-aeca-453f-a2b4-ba03a73fa011.png',
-  chalet3: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/f9a80aeb-8e9c-4317-b70b-1a3df76d175e.png',
-  chalet4: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/cf9a4fab-281b-4ea5-a9e9-84b52ec43321.png',
-  chalet5: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/8089ad74-7741-4196-98b1-55d50bd2f026.png',
-  chalet6: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/ab05ed23-78d8-47ec-a656-c5cec102c511.png',
-  chalet7: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/58be0ebf-f5d8-4165-98dc-bb1bcc621429.png',
-  sub1: 'https://db.quirel.com/storage/v1/object/public/images/chat-attachments/feca4381-daad-415f-ac40-670074e0ed03/20734adae4e4.png',
-  sub2: 'https://db.quirel.com/storage/v1/object/public/images/chat-attachments/feca4381-daad-415f-ac40-670074e0ed03/4dca1f974e61.png',
-}
-
 const IMGS_GB = {
   aa1: '/grand-bornant/authentique-alpine/aa1.png',
   aa2: '/grand-bornant/authentique-alpine/aa2.png',
@@ -268,7 +256,7 @@ export const rentProperties = [
   },
   {
     id: 'rent-8',
-    title: 'Appartement vue sur les Aravis',
+    title: 'Chalet au pied de La Clusaz',
     station: 'grand-bornand',
     stationLabel: 'Le Grand-Bornand',
     price: 1392,
@@ -282,7 +270,7 @@ export const rentProperties = [
   },
   {
     id: 'rent-9',
-    title: 'Studio Cocon Bornand',
+    title: 'Petit chalet au pied des pistes',
     station: 'grand-bornand',
     stationLabel: 'Le Grand-Bornand',
     price: 520,

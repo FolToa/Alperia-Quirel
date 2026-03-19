@@ -70,7 +70,8 @@ export default function Home() {
         </div>
       </section>
       <section>
-        <h2 className="section-title">Explorez par station</h2>
+        <h2 className="section-title-subtitle">Explorez par station</h2>
+        <h4 className="section-subtitle">Découvrez nos stations partenaires - forfait inclus dans les locations luxes, et -20% dans les magasins Skimium pour toutes les locations</h4>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 20 }}>
           {stations.map(s => <StationCard key={s.id} station={s} navigate={navigate} />)}
         </div>
