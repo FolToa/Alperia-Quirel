@@ -15,6 +15,7 @@ const jobs = [
 const history = [
   { year: '2008', title: "Création d'Alperia", text: "Fondation de l'agence à Chambéry avec une vision : révolutionner l'immobilier de montagne." },
   { year: '2012', title: 'Expansion vers la Haute-Savoie', text: "Lancement des pôles location et achat dans le département du 74." },
+  { year: '2018', title: 'Service Location de Luxe', text: "Lancement de notre département dédié aux locations prestigieuses." },
   { year: '2023', title: 'Partenariats', text: "Mise en place de partenariats avec les stations de ski" },
 ]
 
