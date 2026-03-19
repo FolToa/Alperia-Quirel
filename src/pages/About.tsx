@@ -7,16 +7,15 @@ const team = [
 ]
 
 const jobs = [
-  { title: 'Gestionnaire de Location', type: 'CDI', location: 'Le Grand-Bornand', desc: "Gestion complète des biens en location saisonnière, relations avec les propriétaires et locataires, suivi des réservations." },
-  { title: "Agent d'Entretien", type: 'CDI', location: 'Le Grand-Bornand', desc: "Entretien et maintenance des propriétés, petites réparations, préparation des chalets entre chaque séjour." },
-  { title: 'Hôte(sse) de Réception', type: 'CDD saisonnier', location: 'Le Grand-Bornand', desc: "Accueil des clients, check-in/check-out, présentation des chalets, assistance durant le séjour." },
+  { title: 'Gestionnaire de Location', type: 'CDI', location: 'Chambéry', desc: "Gestion complète des biens en location saisonnière, relations avec les propriétaires et locataires, suivi des réservations." },
+  { title: "Agent d'Entretien", type: 'CDI', location: 'Chambéry', desc: "Entretien et maintenance des propriétés, petites réparations, préparation des chalets entre chaque séjour." },
+  { title: 'Hôte(sse) de Réception', type: 'CDD saisonnier', location: 'Chambéry', desc: "Accueil des clients, check-in/check-out, présentation des chalets, assistance durant le séjour." },
 ]
 
 const history = [
-  { year: '2008', title: "Création d'Alpine Prestige", text: "Fondation de l'agence à Chambéry avec une vision : révolutionner l'immobilier de montagne." },
-  { year: '2012', title: 'Expansion vers Courchevel', text: "Ouverture de notre bureau dans la station emblématique des 3 Vallées." },
-  { year: '2018', title: 'Service Location de Luxe', text: "Lancement de notre département dédié aux locations prestigieuses." },
-  { year: '2023', title: '+500 biens gérés', text: "Cap symbolique franchi avec plus de 500 propriétés dans notre portefeuille." },
+  { year: '2008', title: "Création d'Alperia", text: "Fondation de l'agence à Chambéry avec une vision : révolutionner l'immobilier de montagne." },
+  { year: '2012', title: 'Expansion vers la Haute-Savoie', text: "Lancement des pôles location et achat dans le département du 74." },
+  { year: '2023', title: 'Partenariats', text: "Mise en place de partenariats avec les stations de ski" },
 ]
 
 export default function About({ onRdv }) {
@@ -48,7 +47,7 @@ export default function About({ onRdv }) {
   return (
     <div style={{ paddingTop: 80, background: 'var(--gray)', minHeight: '100vh' }}>
       <div className="page-hero">
-        <h1>À Propos d'Alpine Prestige</h1>
+        <h1>À Propos d'Alperia</h1>
         <p>Votre partenaire de confiance pour l'immobilier d'exception en Savoie et Haute-Savoie depuis plus de 15 ans.</p>
       </div>
 
@@ -111,7 +110,7 @@ export default function About({ onRdv }) {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 40, maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ background: 'white', padding: 40, borderRadius: 8, boxShadow: '0 5px 20px rgba(0,0,0,0.05)' }}>
             <h3 style={{ color: 'var(--primary)', marginBottom: 25 }}>Nos Coordonnées</h3>
-            {[['Téléphone', '+33 4 79 00 00 00'], ['Email', 'contact@alpineprestige.fr'], ['Adresse', '15 Rue du Mont-Blanc, 73000 Chambéry']].map(([label, val]) => (
+            {[['Téléphone', '+33 4 79 00 00 00'], ['Email', 'contact@alperia.fr'], ['Adresse', '67 Rue Saint-François de Sales - 73000 Chambéry']].map(([label, val]) => (
               <div key={label} style={{ marginBottom: 20 }}>
                 <strong style={{ display: 'block', marginBottom: 4 }}>{label}</strong>
                 <p style={{ color: '#666' }}>{val}</p>

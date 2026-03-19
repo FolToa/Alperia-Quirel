@@ -412,10 +412,10 @@ export const luxeProperties = [
 ]
 
 export const stations = [
-  { id: 'aillons', label: 'Aillons-Margériaz', image: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/f9a80aeb-8e9c-4317-b70b-1a3df76d175e.png' },
-  { id: '3-vallees', label: 'Les 3 Vallées', image: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/58be0ebf-f5d8-4165-98dc-bb1bcc621429.png' },
-  { id: 'tignes', label: "Tignes / Val d'Isère", image: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/8089ad74-7741-4196-98b1-55d50bd2f026.png' },
-  { id: 'la-clusaz', label: 'La Clusaz', image: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/ab05ed23-78d8-47ec-a656-c5cec102c511.png' },
-  { id: 'grand-bornand', label: 'Le Grand Bornand', image: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/961c04f2-a81d-4fe7-af64-0eba3f28baea.png' },
-  { id: 'les-arcs', label: 'Les Arcs', image: 'https://db.quirel.com/storage/v1/object/public/images/website-assets/cf9a4fab-281b-4ea5-a9e9-84b52ec43321.png' },
+  { id: 'aillons', label: 'Aillons-Margériaz', image: 'aillons-margeriaz.png' },
+  { id: '3-vallees', label: 'Les 3 Vallées', image: 'les-3-vallees.png' },
+  { id: 'tignes', label: "Tignes / Val d'Isère", image: 'tignes-val-d-isere.png' },
+  { id: 'la-clusaz', label: 'La Clusaz', image: 'la-clusaz.png' },
+  { id: 'grand-bornand', label: 'Le Grand Bornand', image: 'le-grand-bornant.png' },
+  { id: 'les-arcs', label: 'Les Arcs', image: 'les-arcs.png' },
 ]

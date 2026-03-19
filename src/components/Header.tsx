@@ -17,7 +17,7 @@ export default function Header({ onRdv }) {
       <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
         <img
           src="https://db.quirel.com/storage/v1/object/public/images/chat-attachments/feca4381-daad-415f-ac40-670074e0ed03/2f4ce518054a.png"
-          alt="Alpine Prestige"
+          alt="Alperia"
           style={{ height: 50 }}
         />
       </Link>

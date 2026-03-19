@@ -35,7 +35,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <p style={{ opacity: 0.4, fontSize: '0.75rem' }}>© 2026 ALPINE PRESTIGE — Immobilier Savoie & Haute-Savoie</p>
+      <p style={{ opacity: 0.4, fontSize: '0.75rem' }}>© 2026 ALPERIA — Immobilier Savoie & Haute-Savoie</p>
     </footer>
   )
 }

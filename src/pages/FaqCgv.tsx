@@ -38,11 +38,11 @@ export function FAQ() {
 
 export function CGV() {
   const articles = [
-    { title: 'Article 1 — Objet', text: "Les présentes conditions générales de vente régissent les relations contractuelles entre Alpine Prestige et ses clients pour toute transaction immobilière, location ou achat de biens présentés sur ce site." },
-    { title: 'Article 2 — Services proposés', text: "Alpine Prestige propose des services de vente et de location de biens immobiliers situés en Savoie et Haute-Savoie. Les biens présentés font l'objet de mandats exclusifs ou non exclusifs avec leurs propriétaires." },
+    { title: 'Article 1 — Objet', text: "Les présentes conditions générales de vente régissent les relations contractuelles entre Alperia et ses clients pour toute transaction immobilière, location ou achat de biens présentés sur ce site." },
+    { title: 'Article 2 — Services proposés', text: "Alperia propose des services de vente et de location de biens immobiliers situés en Savoie et Haute-Savoie. Les biens présentés font l'objet de mandats exclusifs ou non exclusifs avec leurs propriétaires." },
     { title: 'Article 3 — Réservation et paiement', text: "Pour les locations, un acompte de 30% est demandé à la réservation. Le solde doit être réglé 30 jours avant l'arrivée. Pour les ventes, les modalités sont définies lors de la signature du compromis." },
     { title: 'Article 4 — Annulation', text: "En cas d'annulation plus de 48h avant l'arrivée, l'acompte est remboursé intégralement. En cas d'annulation moins de 48h, l'acompte est conservé." },
-    { title: 'Article 5 — Responsabilité', text: "Alpine Prestige s'engage à décrire les biens de manière exacte. Toutefois, les informations présentées n'ont pas valeur contractuelle absolue et peuvent faire l'objet de modifications." },
+    { title: 'Article 5 — Responsabilité', text: "Alperia s'engage à décrire les biens de manière exacte. Toutefois, les informations présentées n'ont pas valeur contractuelle absolue et peuvent faire l'objet de modifications." },
     { title: 'Article 6 — Protection des données', text: "Les données personnelles collectées sont traitées conformément au RGPD. Elles sont utilisées exclusivement pour le traitement de votre demande et ne sont pas transmises à des tiers sans votre consentement." },
   ]
   return (
