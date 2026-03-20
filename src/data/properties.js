@@ -214,7 +214,7 @@ export const rentProperties = [
   },
   {
     id: 'rent-5',
-    title: 'Chalet vue sur les Aravis',
+    title: 'Chalet au pied de la station',
     station: 'la-clusaz',
     stationLabel: 'La Clusaz',
     price: 1458,
@@ -256,7 +256,7 @@ export const rentProperties = [
   },
   {
     id: 'rent-8',
-    title: 'Chalet au pied de La Clusaz',
+    title: 'Chalet vue sur les Aravis',
     station: 'grand-bornand',
     stationLabel: 'Le Grand-Bornand',
     price: 1392,
