@@ -85,7 +85,7 @@ const IMGS_TIG = {
 export const saleProperties = [
   {
     id: 'sale-1',
-    title: 'Chalet Authentique Alpine',
+    title: 'Grand chalet authentique',
     station: 'grand-bornand',
     stationLabel: 'Le Grand-Bornand',
     price: 995000,
