@@ -182,7 +182,7 @@ export default function PropertyDetail({ property, type, onClose, onRdv }) {
               </div>
             )}
 
-            <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '2rem', marginBottom: 8 }}>{property.title} Bonjour</h1>
+            <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '2rem', marginBottom: 8 }}>{property.title}</h1>
             <p style={{ color: 'var(--primary)', fontSize: '1.1rem', marginBottom: 5 }}>{property.stationLabel}</p>
             <p style={{ color: 'var(--text-muted)', marginBottom: 20 }}>{property.location}</p>
 
